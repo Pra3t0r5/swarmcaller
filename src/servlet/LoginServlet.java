@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entities.*;
+import business.LoginControler;
+
 /**
  * Servlet implementation class loginServlet
  */
@@ -18,15 +21,13 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+        super();        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -34,8 +35,18 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		LoginControler ctrl = new LoginControler();
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		System.out.println(email+"|"+password);
+		
+		User u = new User();
+		u.setEmail(email);
+		u.setPassword(password);
+		u = ctrl.getUser(u);
+		
+		request.getRequestDispatcher("WEB-INF/UserManagement.jsp").forward(request, response); //Que significa?
 	}
 
 }
